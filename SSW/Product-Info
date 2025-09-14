@@ -1,0 +1,55 @@
+.name
+SSW
+.fullname
+Solar System Wars
+.type
+Action Game
+.short
+2 player space war game in 53 systems.
+.description
+Solar System Wars is a game similar to Space Wars, pitting two players
+against each other, in orbit around 0 to 4 stars.  Choose from 53
+different solar systems, or turn on the random system selector for a
+new challenge every round.  A variety of weapons are available.  Two or
+three button joysticks are strongly recommended, but not required.
+Both NTSC and PAL are supported.  Binary only.
+
+New in version 1.38:
+
+* Fixed bug that sometimes left torpedo pixels on the screen when a
+  Cluster Pod popped.
+
+* Fixed glitch in joystick routines that made a Cloaked ship flicker if
+  you tried Hyperspace at the same time.
+
+* Made the Disruptor more disruptive.  When hit, a ship will accelerate
+  with quad thrust while spinning.
+
+.version
+1.38
+.date
+1995.02.28
+.author
+James Cleverdon
+.requirements
+Needs AmigaDos v1.3 or higher, 194K of fast RAM, 49K of chip RAM, all 8
+sprites, all 4 audio channels, and the potgo resource for game port 1.
+.reference
+<< Insert path from next Fish CD-ROM here >>
+1.38
+/pub/aminet/game/2play/SSW_1.37.lha
+1.37
+GoldFish2-Apr94:d8xx/d839/SSW
+1.14
+.distribution
+Copyright but Freely Redistributable
+.exectype
+68000
+.construction
+SAS/C 6.51, plus assembly
+.tested
+A1000 (v1.3), A500 (v1.3), A3000 (v2.04), A3000 (v2.1)
+.docs
+SSW.doc
+.submittal
+Uploaded to AmiNet and snail-mailed to Fred Fish.

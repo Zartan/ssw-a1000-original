@@ -1,0 +1,42 @@
+/*
+ * Copyright 1993, 1995 James Cleverdon.  All rights reserved.
+ *
+ * spin.h
+ *
+ * This file is part of Solar System Wars (SSW).
+ *
+ * This version of SSW is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * SSW is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with SSW.  If not, see <https://www.gnu.org/licenses/>. 
+ */
+
+#include <math.h>
+
+#define NEL(x)          (sizeof(x) / sizeof(*x))
+
+#define S_SIZE		7		/* sprite width/heigth in pixels */
+
+typedef unsigned char	uchar;
+typedef unsigned short	ushort;
+typedef unsigned int	uint;
+typedef unsigned long	ulong;
+
+typedef double		real_t;
+
+typedef struct my_coord {
+	real_t	x, y;
+} coord_t;
+
+extern void draw_area(int, real_t, real_t, coord_t *, int);
+extern void draw_image(real_t);
+extern void draw_ring(int color, real_t radius, real_t width);
+

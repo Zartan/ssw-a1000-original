@@ -1,0 +1,58 @@
+
+		     Solar Systems Wars -- Version 1.38
+
+A = Right Amiga Key, C = Control Key, AC = Right Amiga & Control
+
+Project
+ Pause? 	     A-P
+ New		     A-N
+ About...	     HELP, AC-A
+ Screen To Front     A-[
+ Screen To Back      A-]
+ Quit...	     A-Q
+
+System
+ No Primaries	     A-Z
+ One Primary
+  Red Dwarf	     A-E   Yellow Star	      A-Y   Blue Giant	       AC-S
+  Small Black Hole   A-T   Medium Black Hole  A-U   Large Black Hole   A-I
+ Two Primaries
+  Red Dwarves	     A-O   Red / Yellow       A-{   Red / Blue	       A-}
+  Red / Sml BH	     A-D   Red / Med BH       A-F   Red / Lrg BH       A-G
+  Yellow Stars	     A-H   Yellow / Blue      A-J   Yellow / Sml BH    A-K
+  Yellow / Med BH    A-;   Yellow / Lrg BH    A-:   Blue Giants        A-'
+  Blue / Sml BH      A-"   Blue / Med BH      AC-L  Blue / Lrg BH      A-X
+  Small Black Holes  A-C   Sml BH / Med BH    A-V   Sml BH / Lrg BH    A-,
+  Medium Black Holes A-<   Med BH / Lrg BH    A-.   Large Black Holes  A->
+ Three Primaries
+  Red / Yel / Yel    A-/   Yel / Blue / Blue  A-?   Yel / SBH / SBH    A-DEL
+  Blue / MBH / MBH   A-ESC BH: S / M / M      AC-B  BH: M / L / L      AC-G
+ Four Primaries
+  Red Dwarves	     AC-O  Yellow Stars       AC-P  Blue Giants        AC-Q
+  Small Black Holes  AC-R
+ Misc. Systems
+  Black Ellipse      A-BS  Wide Red Binary    AC-J  Wide Yellow Binary AC-N
+  Wide Blue Binary   A-`   Wide Sml BH Binary A-~   Wide Med BH Binary A-Spac
+  Wide Lrg BH Binary A-Tab Asteroid Swarm     AC-K
+ Asteroid?	     A-A
+
+Options
+ Beginner Mode?      A-B
+ Random Game?	     A-R
+ Screen Wrap?	     A-W
+ Ship Thrust
+  Low		     A-_   Medium	      A-+   High	       A-|
+ Torp Velocity
+  Low		     A--   Medium	      A-=   High	       A-\
+ Torp Lifetime
+  Short 	     A-S   Medium	      A-M   Long	       A-L
+ Green Ship Opts
+  Joyport 0	     A-1   Keyboard	      A-2   Cloaking	       A-3
+  Disruptor	     A-4   Anomalizer	      A-5   Plasma Bolt        A-6
+  Quad Thrust	     A-7   Seeker	      A-8   Guided Torp        A-9
+  Cluster Pod	     A-0
+ Purple Ship Opts
+  Joyport 1	     A-!   Keyboard	      A-@   Cloaking	       A-#
+  Disruptor	     A-$   Anomalizer	      A-%   Plasma Bolt        A-^
+  Quad Thrust	     A-&   Seeker	      A-*   Guided Torp        A-(
+  Cluster Pod	     A-)

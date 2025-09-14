@@ -1,0 +1,1023 @@
+
+
+
+
+		[0;1mSolar System Wars -- Version 1.38[0m
+
+Copyright © 1992-1995 James Cleverdon.	All Rights Reserved.
+
+The binary copy of THIS version of SSW and its other files may be
+freely distributed for non-commercial purposes, including and
+especially by Fred Fish's wonderful collection of software, as well as
+the great AmiNet system, world-wide.
+
+More legal garbage and disclaimers below.
+
+
+
+		   [0;1mNew Features for Version 1.38[0m
+
+* Fixed bug that sometimes left torpedo pixels on the screen when a
+  Cluster Pod popped.
+
+* Fixed glitch in joystick routines that made a Cloaked ship flicker if
+  you tried Hyperspace at the same time.
+
+* Made the Disruptor more disruptive.  When hit, a ship will accelerate
+  with quad thrust while spinning.
+
+
+
+			    [0;1mRequirements[0m
+
+* Runs under OS 1.3, 2.0+, and 3.0+.
+
+* Needs at least 194K of Fast RAM and 49K of Chip RAM, assuming you use
+  the supplied SSW.snd file.  (Heavily fragmented memory may prevent
+  SSW from running, even if there is enough chip and fast RAM listed by
+  the Avail command.)
+
+* Only needs 5K of stack space, but I'm keeping SAS/C's default of 8K
+  in SSW.info to be safe.
+
+* Requires all of the hardware sprites, all 4 audio channels, and the
+  potgo.resource bits for gameport unit 1.
+
+* Works with one-button digital joysticks (standard Amiga joysticks),
+  but three-button or two-button joysticks are strongly advised.
+  Instructions for joystick re-wire are included below.  Does not
+  support analog joysticks or Sega gamepads (mostly, see note below).
+
+
+
+			   [0;1mQuick Start-up[0m
+
+* Install SSW.
+    + If SSW isn't compressed and came on a floppy, either run it from
+      the floppy (label it SSW:), or just drag the SSW drawer to RAM or
+      onto your hard drive.
+    + If SSW came compressed, or was downloaded, create a drawer named
+      SSW and decompress the archive file in the usual way:
+	* Make a new drawer (directory) named SSW
+	* open up a shell and CD SSW
+	If you have SSW.lha:  lha -x -a -m x SSW.lha
+
+* Have a joystick plugged into Joyport 1, and either be ready to plug
+  in a second joystick into Joyport 0, or familiarize yourself with the
+  keyboard control keys.  If you have two-button or three-button
+  joysticks now is the time to use them!  Or, you can use ordinary one-
+  button joysticks and some keys on the keyboard.
+
+* Start up SSW.  Use either the Workbench or the Shell.  Be sure that
+  either its files are in the drawer with SSW, or else enter in the
+  Shell:
+
+    assign SSW: [0;3mdrawer_containing_files[0m
+
+  If SSW lives on its own floppy disk, label it SSW.
+
+    relabel df0: SSW
+
+* Select any desired options from the menu with the mouse or keyboard.
+  (See below for a list of menu command keys.  Also, a file named
+  Menu.keys has been provided for easy reference and printing.)
+  An especially fun option is the Random Game ([0;1mRightAmiga-R[0m), which
+  will randomly select solar systems for each round, along with a
+  random extra weapon for each player.	There are also menus for photon
+  torpedo velocity, torpedo life, ship thrust, etc.
+
+* If you will be playing with two joysticks, then replace the mouse
+  with the second one now.  Then press [0;1mRightAmiga-1[0m to switch
+  to joystick control.
+
+* Enjoy!  The first player to reach 20 points wins!
+
+* After the end of a game, press 'O' to start a new game, or start one
+  earlier using [0;1mRightAmiga-N[0m.
+
+
+
+		   [0;1mJoystick and Keyboard Control[0m
+
+  [0;3mJoystick control:[0m
+    Button1  : Fire photon torpedo
+    Left/Rght: Turn Left/Right
+    Forward  : Thrust
+    Back     : Hyperspace
+    Button2  : Extra weapon
+    Button3  : Full Shields
+    (If you do not have two-button joysticks, for the Extra Weapon use:
+     port 0:  [0;1mRightShift[0m, [0;1mENTER[0m,
+     port 1:  [0;1mLeftShift[0m
+     If you lack three-button joysticks, for keyboard Full Shields use:
+     port 0:  [0;1mRightAlt[0m, [0;1mPad .[0m
+     port 1:  [0;1mLeftAlt[0m
+    )
+
+  [0;3mKeyboard control:[0m
+   (the numbers and period are on the keypad, not on the keyboard)
+    [0;1mDOWN[0m,   5: Fire photon torpedo
+    [0;1mRETURN[0m, 0: Hyperspace
+    [0;1mLEFT[0m,   4: Turn Left
+    [0;1mRIGHT[0m,  6: Turn Right
+    [0;1mUP[0m,     8: Thrust
+    [0;1mRSHIFT[0m, 2: Extra weapon
+    [0;1mRAlt[0m,   .: Full Shields
+    7	     : Left & Thrust
+    9	     : Right & Thrust
+
+  [0;3mProgram control:[0m
+    [0;1mESC[0m,    Q: Quit
+    P	     : Pause
+    [0;1mHELP[0m     : Displays Help requester
+
+
+
+			   [0;1mCommon Gotchas[0m
+
+* Make sure the files named [0;3mSSW.grv[0m and [0;3mSSW.snd[0m are in the
+  current directory, or located at the [0;1mSSW:[0m assignment.  Otherwise, SSW
+  will complain and die.
+
+* You may need to adjust the screen position Preferences in order to
+  see the seventh sprite.  In other words, if the purple ship's plasma
+  bolt or seeker don't show up on the screen, do the following:
+    + quit SSW -- type 'Q', followed by 'Y'
+    + open the [0;3mPreferences[0m program for OS 1.3, or for OS 2.X
+      and beyond, run the [0;3mOverscan[0m program in the Prefs drawer
+      then select [0;1m [mEdit Standard Overscan[0m.
+    + shift the default screen position a little bit to the right
+    + leave via the [0;1mUse[0m gadget
+    + run SSW again
+  Keep trying this until you find a screen position that allows the
+  7th sprite to appear, and best fits your monitor.  Once you have
+  this, either save this setting in Preferences, or use one of the
+  public domain Preferences savers to save this setting in a file for
+  easy recall later.  (Prefs savers are available on Fred Fish disks,
+  AmiNet, and many BBSs.)
+
+* If you've forgotten to press [0;1mRightAmiga-1[0m, then a joystick
+  plugged into the mouse joyport won't do anything useful.
+
+* If a four star or four asteroid system is on the screen, then the
+  mouse will be turned off -- even if one player is using the keyboard.
+
+* If you have an AGA Amiga, run SSW in EGA emulation mode.
+
+
+
+			  [0;1mMenus Explained[0m
+
+A = Right Amiga Key, C = Control Key, other keys such as [0;1mESC[0m are named.
+([0;3mi.e.[0m AC-A means hold down RightAmiga and Control, then press 'A'.)
+
+Project
+  Pause?	       A-P		Pause the game
+  New		       A-N		Start a New game
+  About...	       [0;1mHELP[0m, AC-A
+  Screen To Front      A-[		Move the SSW screen to front
+  Screen To Back       A-]		Push the SSW screen to back
+  Quit...	       A-Q		Leave SSW
+
+System
+  No Primaries	       A-Z		No stars at all
+  One Primary				Your ship orbits one star
+    Red Dwarf	       A-E
+    Yellow Star        A-Y
+    Blue Giant	       AC-S
+    Small Black Hole   A-T
+    Medium Black Hole  A-U
+    Large Black Hole   A-I
+  Two Primaries 			Your ship orbits two stars
+    Red Dwarves        A-O
+    Red / Yellow       A-{
+    Red / Blue	       A-}
+    Red / Sml BH       A-D
+    Red / Med BH       A-F
+    Red / Lrg BH       A-G
+    Yellow Stars       A-H
+    Yellow / Blue      A-J
+    Yellow / Sml BH    A-K
+    Yellow / Med BH    A-;
+    Yellow / Lrg BH    A-:
+    Blue Giants        A-'
+    Blue / Sml BH      A-"
+    Blue / Med BH      AC-L
+    Blue / Lrg BH      A-X
+    Small Black Holes  A-C
+    Sml BH / Med BH    A-V
+    Sml BH / Lrg BH    A-,
+    Medium Black Holes A-<
+    Med BH / Lrg BH    A-.
+    Large Black Holes  A->
+  Three Primaries			Your ship orbits three stars
+    Red / Yel / Yel    A-/
+    Yel / Blue / Blue  A-?
+    Yel / SBH / SBH    A-[0;1mDEL[0m
+    Blue / MBH / MBH   A-[0;1mESC[0m
+    BH: S / M / M      AC-B
+    BH: M / L / L      AC-G
+  Four Primaries			Your ship "orbits" four stars
+    Red Dwarves        AC-O
+    Yellow Stars       AC-P
+    Blue Giants        AC-Q
+    Small Black Holes  AC-R
+  Misc. Systems 			Other solar systems
+    Black Ellipse      A-[0;1mBACKSPACE[0m
+    Wide Red Binary    AC-J
+    Wide Yellow Binary AC-N
+    Wide Blue Binary   A-`
+    Wide Sml BH Binary A-~
+    Wide Med BH Binary A-[0;1mSPACE[0m
+    Wide Lrg BH Binary A-[0;1mTAB[0m
+    Asteroid Swarm     AC-K
+  Asteroid?	       A-A		Add asteroid to 0/1 star games
+
+Options
+  Beginner Mode?       A-B		No random high-gravity systems
+  Random Game?	       A-R		Randomize every round
+  Screen Wrap?	       A-W		Choose screen wrap vs. bounce
+  Ship Thrust				Pick ship thrust
+    Low 	       A-_
+    Medium	       A-+
+    High	       A-|
+  Torp Velocity 			Pick photon torpedo velocity
+    Low 	       A--
+    Medium	       A-=
+    High	       A-\
+  Torp Lifetime 			Pick photon torpedo lifetime
+    Short	       A-S
+    Medium	       A-M
+    Long	       A-L
+  Green Ship Opts
+    Joyport 0	       A-1		Control from mouse port
+    Keyboard	       A-2		Control from keyboard
+    Cloaking	       A-3		Your ship turns invisible
+    Disruptor	       A-4		Shoot a disruptive energy blast
+    Anomalizer	       A-5		Fire an anomaly blast
+    Plasma Bolt        A-6		Hurl a ball of electric death
+    Quad Thrust        A-7		Accelerate at quadruple thrust
+    Seeker	       A-8		Launch a seeker missile
+    Guided Torp        A-9		Shoot a remote-controlled torp
+    Cluster Pod        A-0		Fire pod that bursts into torps
+  Purple Ship Opts
+    Joyport 1	       A-!		--Ditto--
+    Keyboard	       A-@
+    Cloaking	       A-#
+    Disruptor	       A-$
+    Anomalizer	       A-%
+    Plasma Bolt        A-^
+    Quad Thrust        A-&
+    Seeker	       A-*
+    Guided Torp        A-(
+    Cluster Pod        A-)
+
+
+
+			   [0;1mWeapons, etc.[0m
+
+* [0;3mPhoton Torpedo[0m -- shoot a simple missile in the direction your ship
+  is currently pointing.  A torpedo's initial velocity and lifetime are
+  controlled by Options sub-menus.  You may only have twelve torpedoes
+  in flight at one time, but torpedoes are otherwise unlimited.
+
+* [0;3mRegular Shields[0m -- a gray ring around your ship that absorbs Photon
+  Torpedos, Plasma Bolts, and Seekers, as well as providing limited
+  protection from collisions with asteroids and stars.	Torpedos erode
+  holes in your shields, exposing your ship to sudden destruction.
+  Contact with a star, opponent, asteroid, Plasma Bolt, Guided Torp,
+  Cluster Pod, Anomalizer, or Seeker will overload and destroy your
+  shield generator.  It also makes a "ping" sound.
+
+* [0;3mRegular thrust[0m -- accelerates your ship in the direction it points.
+  The thrust level is controlled by an Options sub-menu.  Fuel is
+  unlimited.
+
+* [0;3mHyperspace[0m -- activated by pulling directly back on a joystick (no
+  diagonals!) or by pressing the [0;1mRETURN[0m key or 0 on the keypad.
+  Hyperspace will teleport your ship to a random location on the
+  screen.  It takes time for Hyperspace to warp you out and back.  Your
+  controls will be frozen during this time.  Also, the hyperspace warp
+  generator takes about two seconds to recharge and be available for
+  use again.
+
+* [0;3mFull Shields[0m -- when activated, your ship becomes a gray octagon,
+  totally immune to photon torpedoes.  Full shields are lost under any
+  circumstances that would overload your regular shields.  Your regular
+  shields are lost whenever the Full Shields are lost.	Your other
+  controls are frozen while Full Shields are up.  Full Shields only
+  stay up for a maximum of about two seconds before dropping.  There is
+  an about one-half second recharge delay.
+
+* [0;3mAnomalizer[0m -- shoot a blast of anomalistic probability.  When hit,
+  your opponent may have his velocity, direction, or extra weapon
+  randomized.  Or, your enemy may be forced into hyperspace, or simply
+  hit as if by a Plasma Bolt.  Or, maybe something else.....
+
+* [0;3mCloaking[0m -- your ship becomes invisible, except for a slight wavering
+  in the background stars.  You may turn and accelerate while cloaked,
+  at the cost of becoming partly visible, but may not fire any weapons.
+  Cloaked ships are not tracked by Seekers.  There is an about one-half
+  second cloaking device recharge delay.
+
+* [0;3mDisruptor[0m -- fire a burst of disruptive EMF energy that travels at the
+  speed of light.  It causes no damage, but confuses your foe for a
+  moment.  Also, it will detonate other extra weapons.
+
+* [0;3mPlasma Bolt[0m -- shoots a large, writhing ball of energy.  Has a
+  limited range, and will be detonated by "just one" photon torpedo.
+
+* [0;3mQuad Thrust[0m -- accelerates your ship with four times its normal
+  acceleration.  Note that SSW does have a maximum allowed speed for
+  all objects (the "speed of light"), which is easy to reach using Quad
+  Thrust.
+
+* [0;3mSeeker[0m -- fires a missile which will seek out and hit your opponent.
+  In fairness to the other player, Seekers are very simple-minded.
+  Seekers can not track Cloaked ships (despite S.T. 6), but will keep
+  their last acceleration vector.
+
+* [0;3mGuided Torp[0m -- shoots a missile that you may control.  When your
+  extra weapon button is pressed, turn or accelerate commands will be
+  sent to the guided missile.  When released, turn or accelerate
+  commands are done by your ship, as usual.  You may re-press your
+  extra weapon button to control the guided missile as often as you
+  like.
+
+* [0;3mCluster Pod[0m -- fires a pod that will burst in a spray of short-lived
+  shrapnel.  Direct hits are usually devastating.
+
+You may not shoot a second Plasma Bolt, Seeker, Anomalizer, Guided
+Torp, Disruptor, or Cluster Pod until the first is gone, or until a
+one-quarter second recharge delay has passed.
+
+Other notes:
+
++ [0;3mBeginner Mode[0m -- when playing the [0;3mRandom Game[0m, the selected solar
+  system will not have too many high-gravity stars in it.
+
++ [0;3mRandom Game[0m -- when turned on, SSW will randomly select a system and
+  extra weapon for each player.  You never get the same extra weapon
+  twice in a row.
+
+
+
+			  [0;1mAsk Capt'n Quirk[0m
+
+And now that grizzled and grouchy veteran of Solar System Wars, Captain
+Quirk -- one who deals out insults, death, and run-on sentences in all
+directions, will answer some of [0;3myour[0m questions about game strategy!
+
+   Thank you, worthless pandering announcer.  There's a big backlog
+   today, so let's go right to the first member of the audience:
+
+Q: How can I keep from getting blown out of the sky whenever my enemy
+   gets Seeker and I get something wimpy like Cloaking?
+
+A: What!  You've got Cloaking against Seeker and you come whining to
+   me?	Get yer pathetic rear-end back out in the arena and [0;1mUSE[0m
+   Cloaking!  Once you are cloaked, Seekers can't track your ship!
+   However, they will keep their last heading, so if you uncloak to
+   fire off a burst of torpedoes, then recloak after a Seeker is coming
+   your way, be sure to accelerate [0;3maway[0m from your last course.  That
+   will fool 'em every time.
+
+Q: Suppose I don't have Cloaking, but have Guided Torp instead?
+
+A: Do I have to do [0;3mall[0m your thinking for you?  Haven't you noticed how
+   [0;3mtotally[0m stupid Seekers are?  Just get something massive, like a star
+   or an asteroid between you and it and the Seeker will mindlessly ram
+   into it.  What's more, Seekers never consider gravity in their
+   attack programs and are easily confused by a Black Hole's gravity.
+
+Q: I try all that and still get fried.	Now what?
+
+A: Get out of here!  <[0;4mdraws and waves blaster menacingly[0m>[0m  I
+   haven't even mentioned shooting Seekers with torps, warping out of
+   danger with Hyperspace, outrunning them with Quad Thrust, or
+   blasting them with Plasma Bolts, Anomalizers, Guided Torps, or
+   Cluster Pods!
+
+   Next questioner.
+
+Q: If my ship can Cloak, why can't it fire Plasma Bolts when uncloaked?
+   I saw that very move on an old episode of Star T<<[0;4mZZAAPP!![0m>>
+
+A: <[0;4mblowing on blaster barrel[0m> Sorry, sonny!  You tried to say the
+   "S.T." phrase, which is a registered trademark of Paramount
+   Corporation.  Don't even [0;1mTHINK[0m of saying it on [0;1;3mmy[0m show.
+
+   Speaking of things we don't mention, <[0;4mpoints blaster at camera[0m>
+   I [0;3mdon't[0m want six hundred of you weekend-SSW geeks out there writing
+   in and telling me that on S.T. 6 they had a modified torpedo track a
+   cloaked ship.  <[0;4mblasts nearby table[0m>  I know that, and thought it was
+   a stupid plot gimmick when I saw the movie.	Any sensor they could
+   mount on a torpedo should be available for phaser lock on the
+   Enterprise.	Lazy screenwriters!  <[0;4mburns a microphone cable in two[0m>
+
+   <[0;4mtakes a sheath of papers from a trembling stagehand[0m>
+   Our next question is from a fax:
+
+Q: I have a hard time reaching the keyboard to use my Extra weapon or
+   Full Shields.  How do you manage?
+
+A: Now that's a fair question.  Either get into the habit of reaching
+   for a shift key on the keyboard, or buy or build yourself some three
+   button digital joysticks.  If you can locate a nine wire joystick
+   cable and find some joysticks that have enough room inside to
+   install two normally-open push-buttons, then its easy to rewire an
+   existing joystick.
+
+   One more thing:  take the usual precautions when dealing with hot
+   solder, connecting [0;3manything[0m homemade up to your Amiga, etc.  If
+   some pitiful excuse for a lawyer shows up on my doorstep, trying to
+   serve [0;3mme[0m a lawsuit because I didn't warn you not to do something
+   truly stupid, then I'll burn the lawyer down where he stands and
+   [0;3mspit[0m on the ashes.
+   <[0;4mwaves blaster, picture bounces as cameraman dives for cover[0m>
+   But, I've already been warned twice that I'm over my Lawyer limit
+   for this season -- so don't screw up, OK?
+
+   Now a question from the audience.
+
+Q: Why are the orbits around Blue / Medium, Small / Medium, Yellow /
+   Large, Red / Medium, and Medium / Large Binaries so unstable,
+   especially in a Bounce game?
+
+A: Good question -- I won't kill you.
+   <[0;4mvaporizes an innocent bystander instead[0m>  Those orbits have
+   resonances with those of their primaries.  That, along with the crude
+   approximation that passes for gravity in SSW does the rest.	Anyway,
+   what do you care about orbits?  Are you a [0;3mpilot[0m, or what?
+
+   What [0;3mis[0m the younger generation coming to?  For Zelkor's sake, use
+   [0;3msome[0m imagination, will you?
+
+   This will be our last question today.  From the audience:
+
+Q: I had just about peeled all the shields from my opponent while only
+   taking one or two hits myself, and was coming back in from the
+   Twilight Zone to finish him off, when I blew up for no reason at
+   all.  What happened?
+
+A: At last, a question worth answering!  Remember that while you are in
+   the Twilight Zone the Amiga hardware collision detection circuitry
+   [0;3misn't[0m checking for collisions.  In the Twilight Zone, everyone and
+   every torpedo is safe.  However, that also means that a torpedo that
+   ordinarily would be absorbed by your shields has a chance of
+   drifting [0;3minside[0m your shields, and may still be there when you emerge
+   from the Twilight Zone.  If that happens to you -- BOOM!
+   <[0;4mBlasts an off-camera object[0m>  To avoid this you can use Full
+   Shields on every entrance or exit from the Twilight Zone.
+   Otherwise, just be very careful out there.
+
+
+That's all for today, but be sure to listen to the next exciting
+episode of "Ask Capt'n Quirk!"
+<[0;4mfade to black as the SWAT team tackles Captain Quirk[0m>
+
+
+
+	   [0;1mKnown Offences Against the OS 2.0 Style Guide[0m
+
+* Turns off the mouse when a player is using Joyport 0, or a four or
+  four asteroid solar system is on the screen.
+
+* Topaz 8 is hard-coded into the menus, requesters, and opening screen.
+
+* Not Internationalized.
+
+* Uses raw key events without proper mapping.
+
+* SSW's screen does not have drag or depth gadgets.  (See the Screen
+  To Back and Screen To Front menu entries for a replacement.)
+
+* The Quit and About requesters are not draggable or depth arrangable,
+  and do not set a "Wait" pointer in the main window when activated.
+
+* Game settings cannot be saved or loaded.
+
+* Doesn't read Tool Types from icon files.
+
+* Pays no attention to Shell command line arguments.
+
+
+
+			 [0;1mKnown Deficiencies[0m
+
+* On my A1000 running v1.3, the menu command keys for RightAmiga-3 and
+  RightAmiga-Control-Q seemed to have swapped functions.  It works just
+  fine under v2.04+, or using the mouse, so I assumed it was a v1.3 bug
+  in menu command processing and rearranged the menu linked lists to put
+  the joyport select entries in front of the system select entries.
+
+  Summary:  Beware!  Under v1.3 you may get wierd results when selecting
+  solar systems using the RightAmiga and Control keys.	If that happens,
+  switch control of joyport 0 back to the mouse and try again.
+
+* On an A3000 running an old version of 2.0, one of the beta testers
+  reported that occasionally when an Anomalizer sprite crosses the upper
+  or lower screen boundaries, its ship will flash white, or worse, the
+  Copper list for the Anomalizer sprite gets corrupted and you see a
+  long stripe of chip RAM.  Solution:  upgrade!
+
+* The use of keyboard screen dragging will misalign the sprites with
+  SSW's screen.
+
+* Uses hardware collision detection for all collisions except between
+  photon torpedoes -- the Twilight Zone on Wrap games is a safety zone
+  from all collisions.	Also, because there are no detection bits for
+  collisions between members of a sprite pair, your own Plasma Bolts,
+  Seekers, Guided Torps, etc won't kill you.
+  (Twilight Zone:  the off-screen part of the game playfield.)
+
+* I can find no easy way of knowing whether the SSW screen is in the
+  foreground, at least not without digging deep into private Intuition
+  data.  This makes it hard for the Copper interrupt routine to
+  know whether to consume the Copper interrupt, or not.  So I play
+  around with the ScreenToFront and ScreenToBack functions and window
+  activation events to try to insure that either SSW's screen is in
+  front of all others, or that it is in back and the game is paused.
+
+* Because of the fact that SSW jams its own values into the posctldata
+  fields of sprites, and uses several low-level hardware registers, SSW
+  may fail with future custom chips.  Amazingly, it works with the AGA
+  chip set in compatability mode!
+
+* Since SSW uses a quick-and-dirty approximation for faster gravity
+  calculations, some star systems are unstable.  Trinary systems will
+  hit the screen edge after about 10 to 13 minutes.  This is almost
+  never a problem, since most rounds last under two minutes.
+
+* Uses ADCMD_LOCKs on the audio device, so it will release a requested
+  channel, then attempt to reallocate it.  All this is according to the
+  rules in the RKM, which allow sharing of audio channels.  However,
+  some programs don't wait long enough for SSW to release its audio
+  locks, and fail.
+
+
+
+		   [0;1mPotential Portability Problems[0m
+
+* The [0;3mScreenToBack[0m menu selection uses a probably non-portable kludge
+  to activate the foremost window in the Workbench screen.
+
+* Uses hardware registers for sprite/playfield collision detection, and
+  changes the POTGO register to use two or three button joysticks.
+
+* Directly modifies the posctldata fields of sprites, so anything that
+  shifts SSW's view origin will confuse the sprite positioning.
+
+* Reads hardware for both joysticks.
+
+* Uses RAWKEY events for the keyboard, so no keymap translations, or
+  localization.
+
+* Installs its own Copper interrupt, and may not work well with other
+  Copper interrupts.
+
+* Assumes that Intuition screens use standard BitMaps.
+
+* Bypasses the graphics library to read and write photon torpedoes, but
+  uses MENUVERIFY and REQVERIFY to synchronize with Intuition.
+
+* The structure used by the Copper interrupt handler isn't in PUBLIC
+  memory, as per the manuals.  This won't matter until virtual memory
+  is attempted by Commodore.
+
+* Sets and clears the CHECKED flag directly in MenuItems, although
+  protected by Disable/Enable.
+
+
+
+		       [0;1mImplementation Details[0m
+
+* Changes the joyport 0 input device from Mouse to Custom, when told to
+  use a joystick in port 0, or when four sprite systems are on the
+  screen.  This change may be confusing to folks, especially for the 4
+  sprite case.
+
+* Sets up a Low-Res Dual Playfield screen with two bit-planes in either
+  PAL or NTSC mode, based on presence of the PAL bit in GfxBase.  This
+  means that a NTSC A3000 will display a NTSC screen, even if it is
+  displaying a PAL Workbench.  Sorry, I couldn't find a legal way to
+  override this, since any attempt to use NTSC/PAL Display IDs is set
+  back to DEFAULT_MONITOR when doing the MakeScreen/RethinkDisplay
+  after attaching the Dual Playfield.
+
+* Installs a Copper Interrupt Server and adds a Copper interrupt to the
+  screen.
+
+* Sorry, can't use AutoRequest or any other window-based requesters for
+  the few requesters SSW uses.	I need the WINDOWACTIVATE and
+  deactivate events to tell me when SSW has been pushed into the
+  background.  This means using layer-based requesters that don't seem
+  to be draggable.  Yet another offense against the Style Guide.
+
+* Allocates audio channels at priority -50, the highest standard level
+  for sound effects.
+
+
+
+	  [0;1mLegal Garbage and Disclaimers, In Plain English[0m
+
+Solar System Wars (SSW) will not cure world hunger.  It will not bring
+global peace.  I do not even guarantee that it is fun to play, or does
+anything more useful than waste CPU cycles.
+
+If you run this software and your disk drive bursts into flames, or
+your 1000 page dissertation on "Why Entropy Is Politically Incorrect"
+gets corrupted, or something else goes drastically wrong, you will get
+my sympathy but nothing else.  I will not provide any money or other
+kind of compensation, no matter how valuable the hardware, software, or
+data that you believe SSW, or SSW's interaction with some other piece
+of software, has destroyed.
+
+If you, or whoever you got SSW from, has hacked, patched, or otherwise
+modified this package, then there is no telling what it will do, and I
+will not be responsible for any part of any problems such changes
+cause.
+
+If you don't like these limitations on my liability, then do not run
+Solar System Wars.  If you do run SSW, then you have agreed to these
+limitations.
+
+Moreover, while I retain the copyright to Solar System Wars, this
+version of SSW may be freely copied for non-commercial purposes, as
+thanks for all the fine public domain and freely distributable software
+that I have used over the years.  No one may charge more for your copy
+of SSW than Fred Fish charges for one Fish disk.  SSW may eventually go
+Shareware, in which case there may be registration fees.
+
+(Aaarrrggghhhh!  I [0;3mhate[0m the paranoid attitude such legalisms require.)
+
+
+
+	       [0;1mSource Code Availability and Bug Fixes[0m
+
+I'm not making the source code available until I decide if I want to
+make SSW shareware or not.  Enjoy this copy entirely guilt-free,
+without any nagging requests to register, to send money anywhere, or to
+make Molotov Cocktails in your basement for the Revolution ([0;3many[0m
+Revolution).
+
+The only thing I ask is that you mail to me any bug reports, great
+ideas, and general impressions you have about SSW.  If I do decide to
+release the source code, I'd like all the obvious bugs fixed first.
+
+My address is:
+
+		James Cleverdon
+		16465 S.W. Estuary Dr., Apt. 101
+		Beaverton, OR 97006
+		USA
+or
+		jamesc@sequent.com
+
+Bug fixes will be released via Fred Fish, AmiNet, and the other usual
+methods.
+
+Ports for other machines, especially IBM PC clones?  Get real!	SSW
+relies too heavily on the Amiga custom chips.
+
+
+			  [0;1mAcknowlegements[0m
+
+Thanks to my play testers:  Clark MacDonald who had the 9-wire cables
+and let me crash his A3000, David Roemer for lots of good ideas
+(especially the random game option), Stewart Boutcher for deadly fire
+and French Vanilla ice cream, and all the others including the Bush
+Harbor Day gang.
+
+
+
+			   [0;1mFile Manifest[0m
+
+Here are the files you should have received:
+
+	   Name 	 Size	   What
+
+	Menu.keys	  2260	(menu keys text)
+	Menu.keys.info	   734	(its icon)
+	Product-Info	  2038	(database description file)
+	SSW		 55736	(the program)
+	SSW.info	   463	(the OS 2.0+ icon)
+	SSW.doc 	 40604	(this document)
+	SSW.doc.info	   735	(its icon)
+	SSW.grv 	123904	(the gravity table)
+	SSW.snd 	 33284	(the sounds file)
+
+
+			 [0;1mSSW.snd File Info[0m
+
+Here is how you can add your own 8SVX sounds to SSW.  If you're not
+familiar with the internals of IFF files, see Appendix A in the Devices
+Manual.  Lacking that, the IFFparse Library chapter in the 2.0 or higher
+Libraries Manual will help.
+
+SSW.snd must be an IFF CAT or LIST file containing at least six
+correctly NAMEd FORM 8SVX chunks:  bounce1, explode1, fire1, hyper_in1,
+hyper_out1, and thrust1.  (Actually, if the '1' suffix is missing, SSW
+assigns the sound to player 1 anyway.)	Here's the complete list of
+sounds:
+
+ bounce1, bounce2	- the "ping" sound made when your shields blow
+ explode1, explode2	- Bang!  You're dead!
+ fire1, fire2		- weapons firing sound
+ hyper_in1, hyper_in2	- "warping in" sound
+ hyper_out1, hyper_out2 - "warping out" sound
+ quad1, quad2		- the Quad Thrust sound
+ shield1, shield2	- photon torp erodes shields sound
+ thrust1, thrust2	- ordinary thrust sound (repeatable)
+ torp_die1, torp_die2	- the sound made when a torpedo expires
+
+The supplied SSW.snd contains:	bounce1, bounce2, explode1, explode2,
+fire1, fire2, hyper_in1, hyper_out1, thrust1, and thrust2.
+
+Where do the other sounds come from?  If a player1 sound exists, but
+the corresponding player2 sound doesn't, SSW will copy 1 to 2.  The
+quad, shield, and torp_die sounds are derived from the thrust, fire,
+and explode sounds, respectively, if needed.
+
+The 8SVX FORMs can appear in any order; all SSW cares about is the NAME
+chunk in each one.  To avoid dependence on iffparse.library, I don't
+use it.  (iffparse didn't come with OS 1.3.)
+
+I did my own IFF parser.  So, don't get too cute with weird IFF files.
+To avoid the need for a large stack, only some chunk types are allowed,
+namely CATs can contain LISTs and FORMs, but nested CATs will be
+skipped.  LISTs may contain PROPs and FORMs, but nested CATs and LISTs
+are skipped.  All FORMs but 8SVX are skipped.  Only the NAME, VHDR, and
+BODY chunks in an 8SVX are read.
+
+Whoops!  In SSW v1.37, I recommended using IFFar, on Fish disk # 162,
+to modify CAT files.  Unfortunately, I forgot that it *requires* the
+silly, unregistered, FNAM chunks that it inserts into each FORM as it.
+adds them to the CAT file.  Instead, use IFFMaster, by Kay Drangmeister,
+to extract each FORM into a seperate file.  Then, you can use IFFar, or
+some other tool, to reassemble your selection of original and new 8SVX
+FORM files into a new SSW.snd CAT file.
+
+Please note that SSW has some fixed ideas about the volume and repeat
+count of the various sounds.  In particular, the thrust and quad sounds
+are set to repeat forever, so avoid any harsh transitions between the
+end and the start of the sample.  Also, the hyper_out sound should last
+about the same time as it takes a ship to go through the "warp out" part
+of a hyperspace jump, or the sound will be chopped by the hyper_in
+sound.
+
+
+
+	      [0;1mInstructions for Three-Button Joysticks[0m
+
+First, a crude ASCII picture of the end of a joystick cable.  This is
+the DB-9 that plugs into your Amiga, taken from the Hardware Guide:
+
+	 _____________________
+	/		      \ 	The numbers are pin numbers.
+	|  5   4   3   2   1  |
+	 \		     /		Viewed as you would look into
+	  \  9	 8   7	 6  /		its end.  Note:  female pins.
+	   \_______________/
+
+	Pin  Joystick	Mouse		* = optional button
+
+	 1   forward   V-pulse
+	 2   back      H-pulse
+	 3   left      VQ-pulse
+	 4   right     HQ-pulse
+	 5   button3*  middle button*
+	 6   button1   left button
+	 7   +5V       +5V
+	 8   GND       GND
+	 9   button2*  right button
+
+All you have to do is add a normally-open push-button with one of the
+button's terminals connected to pin 8 (ground), and the other connected
+to pin 9 (button2), then add another button between pin 5 (button3) and
+pin 8 (ground).  Push the first button, which will ground pin 9, and
+fire a plasma bolt.  Easy?  Maybe.
+
+Standard joystick cables don't include pins 5, 7, or 9.  I was lucky
+enough to have a friend who had a bundle of premade DB-9 cables with
+all 9 wires left over from a previous job.
+
+You may not be so fortunate.  Check electronic surplus stores.	Look
+carefully to make sure that there are pins in all nine holes.  Get a
+continuity tester and verify that every wire you need is really there.
+
+Another problem is finding a joystick that has enough room to allow
+extra buttons.	Also, it is hard to find a small push-button that is
+both reliable and durable, plus has a button big enough not to leave
+an imprint in your thumb at the end of a difficult game.
+
+I'm assuming that you have at least some skill at electronics.  If not,
+check with someone who is skilled, or read the basic-technique articles
+in an electronics hobby magazine.  If you've done all that, then I
+won't need to tell you:
+
+* Don't burn yourself.
+
+* Be sure to insulate all your solder joints with electrician's tape or
+  heat-shrink tubing.
+
+* Test the finished product with a continuity tester.  (A multi-meter
+  set to 'Ohms' or 'Continuity', or even a battery and a light bulb.)
+  Connect it between pin 9 and pin 8 on the joystick DB-9 connector.
+  The tester should indicate a low-resistance circuit when the new
+  button2 is pushed.  When you release the button, the tester should
+  indicate very high (or infinite) resistance.  Then test button3 by
+  hooking the tester between pin 5 and pin 8, and doing the test again.
+
+* Now test for short circuits.	When no buttons are pressed and the
+  stick is not being pushed, then pin 8 should not be connected to any
+  other pin on the connector.
+
+* If you are installing pull-up resistors, or SPDT switches (described
+  below), check that pin 7 is connected *only* to pins 5 and 9 when no
+  buttons are pressed.	If you aren't installing pull-ups, then pin 7
+  should not be connected to *any* other pin regardless of whether any
+  button is pressed or not.
+
+About the only way you can damage your Amiga is by somehow connecting
+the +5V line (pin 7) to ground (pin 8).  Test for this mistake even if
+you aren't adding pull-up resistors as described below.  Be happy by
+being paranoid about Murphy's Laws.
+
+Important Note:  Some older Amigas, which include my 1000 and a 2000
+ owned by a SSW player in Germany, have problems with the second and
+ third buttons.  Basically, the pull-ups for those pins on the joystick
+ ports are weak or entirely defective.	While mice use these pins
+ without trouble, mice contain their own pull-ups and don't rely those
+ of the Amiga.
+
+ How do you know if your Amiga has this problem?  You've got it if you
+ push the second or third button, release it, and SSW acts as if you
+ are still pushing the button.	Or, if after about 15 minutes of not
+ pushing the button, SSW suddenly believes that it *is* pushed.  For
+ further evidence, send the SSW screen to the back with the A-] key.
+ When you bring the SSW screen back to the front, SSW will now realize
+ that you've released the button.
+
+ What to do?  Add pull-up resistors to your joystick.  Connect a 470
+ ohm or 1K ohm resistor between pin 7 (+5V) and pin 9 (button2).  Add
+ another one between pin 7 and pin 5 (button3).
+ Or, if you are using single-throw double-pole buttons, you can connect
+ the common terminal to the button pin, hook the normally-closed
+ terminal to pin 7, and hook the normally-open terminal to pin 8.  That
+ way, when the button is released, the pin will be connected to +5.
+ When you push the button, it connects the pin to ground.  That is what
+ we want.
+
+As long as I'm writing about joysticks, let me pause for a short curse
+at Sega.  Why did they swap the +5V and Select pins from the de-facto
+standard that had been long established by Atari, Commodore, etc?  Were
+they afraid that they might have a slightly larger market and make too
+much money?  &$!*?@ Sega bozos!
+
+The upshot of the previous paragraph is that an Amiga can't read two of
+the buttons on Sega gamepads because they put the +5V supply on pin 5,
+and put their Select input on pin 7.  With Select high, you can read
+the B and C buttons.  With Select low, you can read A and Start.
+
+But, that is exactly opposite of what we want!	I can't lower pin 7
+because it is the Amiga's +5 supply.  (Yes, I pulled my gamepad apart
+to make sure that the pinout is really wrong.)
+
+I have two different brands of gamepads:  one by Sega, and another
+generic pad.  Amazingly, they both work using power provided by the
+pull-up on pin 5.  Of course, they both use CMOS muxes internally,
+which take very little power.  So, although not guaranteed, many --
+maybe even most -- Sega gamepads will work as two-button joysticks.  To
+use them as three-button joysticks requires an adapter or some internal
+rewiring.  Maybe I'll buy or build an adapter, and add the interface
+code when I get over being angry at %!$?* Sega.  Maybe not.
+
+
+
+			    [0;1mReferences[0m
+
+"How to Implement Space Wars (or Using Your Oscilloscope as a
+ Telescope)" by Dave Kruglinski, Byte, 1977??
+
+
+
+		      [0;1mThoughts for the Future[0m
+
+* Many analog joysticks have two or three buttons.  Since I already have
+  to go directly to the hardware for digital joysticks, maybe I can
+  support analog as well.....
+
+* Can the Planet Cruncher be worked in somehow?  How about a Tholian
+  web?
+
+* What about a "Death Blossom" kind of weapon that shoots torpedos in
+  eight different directions?
+
+* Would a Tractor Beam be useful?  Or, a Pressor Beam?
+
+* Maybe some way to repair your shields, like don't push a button for
+  30 seconds per pixel repaired.  (Of course, right now you can take a
+  one-in-sixteen gamble and let your opponent hit you with an
+  Anomalizer.)
+
+* Get real images of asteroids for the asteroid sprites.
+
+* Would it be worthwhile to allow customized space ships?  Can I afford
+  the CPU cycles on slow Amigas?
+
+* Maybe go from a shield erosion model, to a shield heating model, like
+  in "The Mote In God's Eye" or E. E. Smith's Lensman series.  Of
+  course, to do that right I would have to include heating from stars.
+  This should be roughly proportional to the sum of the magnitudes of
+  the gravitational force vectors, except for black holes.  And what
+  happens when you finally do blow the shields?  BOOM?	Or just lose
+  them?
+
+
+
+		   [0;1mVersion Log[0m
+
+
+	== v1.37 ==
+
+* Now support for three-button joysticks!
+
+* Everyone now gets Full Shields all the time, controlled by the third
+  button, or the left/right Alt key.
+
+* New extra weapons!  Get ready for the Anomalizer, Disruptor, Guided
+  Torp, and the Cluster Pod!  Sadly, Flip Ship has gone to that bit
+  bucket in the sky.
+
+* Four star solar systems!
+
+* New Beginner Mode, which keeps the Random System mode from picking
+  high-gravity solar systems.
+
+* Tested on A1000 (OS 1.3), A500 (OS 1.3), and A3000 (OS 2.1).
+  Reports indicate that SSW runs AGA machines.	Wow!  Hats off to
+  Commodore for such great hardware compatibility!  SSW is free of
+  Enforcer hits on an A3000.
+
+* Each player now gets twelve active torpedos instead of nine.
+
+* Enough already!  I've changed the random game code so that you'll
+  never have the same extra weapon twice in a row.  Satisfied?	 8-)
+
+* The Seeker and Cluster Pod sprites are larger and easier to see.
+
+* Improved Seeker code.  They no longer are useless in high gravity
+  systems.
+
+* SSW's sound effects now come in an IFF file!  Add your own sounds!
+  Amaze your friends!  Confound your enemies!
+
+* Fixed the sprite glitching problem on slower machines.
+
+* SSW no longer adds an input event handler to eat mouse events.  No
+  more compatability problems with Commodities or other handlers.
+
+* Added a New Game requester that shows up after someone wins.
+
+* Added potgo.resource code to play by the rules.
+
+* Compiled with cback.o, so SSW will automatically put itself in the
+  background.
+
+	== v1.14 ==
+
+* First public release!
+
+* All new support for two-button joysticks!
+
+* Everyone now gets Hyperspace all the time, as well as an extra weapon
+  from the Options menus!
+
+* Double-thick shields for EXTRA protection!
+
+* Improved color register handling for superior performance [0;3mwithout[0m
+  the earlier glitching problems!
+
+* Much smoother motion, because now SSW does one game cycle (complete
+  with all gravity calculations) for every screen frame, even on
+  standard A1000 and A500 machines!  Yes, that's 50Hz for PAL and 60Hz
+  for NTSC.  The only exception is for cycles involving sprite
+  collisions, which take two screen frames per game cycle.
+
+* All of the gravity and update subroutines have been redone in
+  hand-optimized assembly code for extra speed, [0;3mplus[0m the added bonus
+  of now fitting entirely in the instruction caches of 68020 and 68030
+  CPUs!
+
+* Tested on A1000 (OS 1.3), A500 (OS 1.3), and A3000 (OS 2.04).
+  Should run under OS 2.1.  Will almost certainly break on an AGA chip
+  machine.  Is free of Enforcer hits on A3000.
+
+* Multi-tasks.	(SSW should be the highest priority CPU-intensive task
+  for smoothest game play.)
+
+	== Earlier ==
+
+* Before the beginning of time.  Delete any SSWs before 1.14.
+[0m

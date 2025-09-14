@@ -1,0 +1,39 @@
+# Copyright 1993, 1995 James Cleverdon.  All rights reserved.
+#
+# DMakefile for spin
+#
+# This file is part of Solar System Wars (SSW).
+#
+# This version of SSW is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# SSW is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along
+# with SSW.  If not, see <https://www.gnu.org/licenses/>. 
+
+CFLAGS= -f8d -O
+OBJS=	im.o spin.o
+LIBS=	lib:lcm881.lib lib:lc.lib lib:amiga.lib
+
+all:	spin img invert
+
+img:	img.c
+	lc:lc -O -L img.c
+
+invert: invert.c
+	lc:lc -O -L invert.c
+
+spin:	$(OBJS)
+	lc:blink from lib:c.o $(OBJS) to spin lib $(LIBS)
+
+im.o:	im.c spin.h
+	lc:lc $(CFLAGS) im.c
+
+spin.o: spin.c spin.h
+	lc:lc $(CFLAGS) spin.c
